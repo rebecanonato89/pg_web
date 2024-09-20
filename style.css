@@ -44,7 +44,7 @@ body {
 .content {
     position: relative;
     z-index: 1;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -119,5 +119,26 @@ p {
 
 .cursor.hover {
     transform: scale(2.5);
-    background-color: #00ffcc; /* Cor ao passar sobre elementos interativos */
+    background-color: #3b665d; /* Cor ao passar sobre elementos interativos */
+}
+
+/* Estilos principais */
+.highlighted-words {
+    font-size: 1em; /* Tamanho maior para destacar as palavras */
+    font-weight: bold; /* Negrito */
+    color: #3498db; /* Cor inicial (um azul suave) */
+    transition: color 0.5s ease, transform 0.3s ease; /* Transições suaves para troca de cores e escala */
+    text-transform: uppercase; /* Caixa alta */
+    display: inline-block;
+}
+
+/* Animação de troca de palavras */
+.highlighted-words.appear {
+    color: #e74c3c; /* Cor quando a palavra aparece (vermelho) */
+    transform: scale(1.0); /* Pequeno aumento de escala para destaque */
+}
+
+.highlighted-words.disappear {
+    color: #2ecc71; /* Cor antes de desaparecer (verde) */
+    transform: scale(0.8); /* Diminuir a escala para o efeito de desaparecimento */
 }

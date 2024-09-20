@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// palavra
 
-// Código para trocar as palavras
 var words = ["Incrível!", "Inovador!", "Extraordinário!", "Avançado!", "Impressionante!", "Surpreendente!"];
 var index = 0;
 var changingWordsElement = document.getElementById('changing-words');
@@ -28,12 +28,11 @@ var changingWordsElement = document.getElementById('changing-words');
 function typeWord(word, callback) {
     var letterIndex = 0;
     changingWordsElement.innerHTML = '';
-    //changingWordsElement.style.width = '0';
+    changingWordsElement.classList.add('appear'); // Adiciona a classe 'appear' para animação
     
     var typingInterval = setInterval(function() {
         letterIndex++;
-        changingWordsElement.innerHTML = word.substring(0, letterIndex);
-        //changingWordsElement.style.width = changingWordsElement.innerHTML.length + 'ch';
+        changingWordsElement.innerHTML = '<strong>' + word.substring(0, letterIndex).toUpperCase() + '</strong>'; // Negrito e caixa alta
 
         if (letterIndex === word.length) {
             clearInterval(typingInterval);
@@ -43,28 +42,33 @@ function typeWord(word, callback) {
 }
 
 function deleteWord(callback) {
-    var word = changingWordsElement.innerHTML;
+    changingWordsElement.classList.remove('appear');
+    changingWordsElement.classList.add('disappear'); // Adiciona a classe 'disappear' para animação
+    
+    var word = changingWordsElement.textContent; // Utilizando textContent para pegar o texto simples sem tags
     var letterIndex = word.length;
 
     var deletingInterval = setInterval(function() {
         letterIndex--;
-        changingWordsElement.innerHTML = word.substring(0, letterIndex);
-        //changingWordsElement.style.width = changingWordsElement.innerHTML.length + 'ch';
+        changingWordsElement.innerHTML = '<strong>' + word.substring(0, letterIndex).toUpperCase() + '</strong>'; // Negrito e caixa alta
 
         if (letterIndex === 0) {
             clearInterval(deletingInterval);
+            changingWordsElement.classList.remove('disappear'); // Remove a classe 'disappear' após a animação
             setTimeout(callback, 500); // Tempo antes de digitar a próxima palavra
         }
     }, 100); // Velocidade de deleção
 }
 
 function loopWords() {
-    typeWord(words[index], function() {
-        deleteWord(function() {
-            index = (index + 1) % words.length;
-            loopWords();
+    setTimeout(function() { // Adicionando um pequeno delay inicial para suavizar o início
+        typeWord(words[index], function() {
+            deleteWord(function() {
+                index = (index + 1) % words.length;
+                loopWords();
+            });
         });
-    });
+    }, 500); // Delay inicial
 }
 
 // Iniciar o loop após a página carregar
